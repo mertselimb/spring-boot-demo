@@ -1,11 +1,13 @@
 package com.pluralsight.conferancedemo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity(name = "sessions")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Session {
 
     @Id
@@ -14,10 +16,6 @@ public class Session {
     private String session_name;
     private String session_description;
     private Integer session_length;
-
-    @Lob
-    @Type(type = "org.hibernate.type.BinaryType")
-    private Byte[] speaker_photo;
 
 
     @ManyToMany
@@ -68,13 +66,5 @@ public class Session {
 
     public void setSpeakers(List<Speaker> speakers) {
         this.speakers = speakers;
-    }
-
-    public Byte[] getSpeaker_photo() {
-        return speaker_photo;
-    }
-
-    public void setSpeaker_photo(Byte[] speaker_photo) {
-        this.speaker_photo = speaker_photo;
     }
 }
